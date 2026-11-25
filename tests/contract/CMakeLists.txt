@@ -256,7 +256,10 @@ endif()
 # the labeler and would leak onto the mdsplus/uda tiers, changing what
 # `ctest -L contract` (sanitizers.yml) selects. assign_contract_labels.cmake
 # assigns each test its complete, final label list instead.
-gtest_discover_tests(contract_tests)
+# NO_PRETTY_VALUES keeps the INSTANTIATE_TEST_SUITE_P name generators as the
+# ctest-name suffix; the printed GetParam() of a struct without PrintTo is a
+# byte dump holding a pointer, which renamed RoundTripMatrix on every build.
+gtest_discover_tests(contract_tests NO_PRETTY_VALUES)
 
 # Bake the generated registration file's path into the labeler. A single
 # discovery pass for contract_tests means GoogleTest writes
